@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Signup</title>
+        <style>
+            .error{color: red;}
+        </style>
+    </head>
+
+    <body>
+
+        <p>
+            <h1>User Signup:</h1>
+        </p>
+
+        <hr />
+
+        <form action="/" method="post">
+
+            <style>
+                .error{color:red;}
+            </style>
+
+            <label for='username'>Username:</label>
+            <input type="text" name="username" value="{{username}}" pattern="{3,20}">
+            <p class="error">{{user_error}}</p>
+            <br>
+        
+            <label for='passone'>Password:</label>
+            <input type="password" name="passone" id="passone" value="{{passone}}" pattern="{3,20}">    
+            <p class="error">{{passone_error}}</p>
+            <br>
+        
+            <label for='passtwo'>Confirm Password:</label>
+            <input type="password" name="passtwo" id="passtwo" value="{{passtwo}}" pattern="{3,20}">
+            <p class="error">{{passtwo_error}}</p>
+            <br>
+        
+            <input type="submit" />
+            
+        </form>
+        
+
+
+
+    </body>
+</html>
