@@ -15,18 +15,24 @@ def validate_time():
     username= request.form['username']
     passone= request.form['passone']
     passtwo= request.form['passtwo']
+    email= request.form['email']
+
+    check="@"
+    dot='.'
+    count=0
 
     passone_error=''
     passtwo_error=''
     user_error=''
+    check_error=''
 
-    if username=='' or len(username)<3:
+    if username==' ' or len(username)<3 or len(username):
         user_error='Not a valid username'
         username=''
     
-    if passone=='' or len(passone)<3 or len(passone)>20:
+    if passone==' ' or len(passone)<3 or len(passone)>20:
         passone_error='Not a valid password'
-        passone=''
+        passone=' '
     
     if passtwo=='' or len(passtwo)<3 or len(passtwo)>20:
         passtwo_error='Not a valid password'
@@ -38,12 +44,26 @@ def validate_time():
         passone=''
         passtwo=''
 
+    for char in email:
+        if check:
+            continue
+        else:
+            check_error="That is not a valid email"
+        for chart in email:
+            if dot:
+                count=1
+        if count<1 and count>1:
+            check_error="To few or to many periods"
+        else:
+            continue
+
     if not user_error and not passone_error and not passtwo_error:
         return redirect('/welcome?username={0}'.format(username))
     else:
         return render_template('base.html', passone_error=passone_error, 
             passtwo_error=passtwo_error, user_error=user_error, 
-            username=username, passone=passone, passtwo=passtwo)
+            username=username, passone=passone, passtwo=passtwo,
+            check_error=check_error, email=email)
 
 @app.route('/welcome')
 def welcome():
