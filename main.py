@@ -55,7 +55,7 @@ def validate_time():
             is_good=True
     
     if is_good==False:
-        email_error="Invalid password"  
+        email_error="Invalid email"  
         email=''     
     
     for chart in email:
