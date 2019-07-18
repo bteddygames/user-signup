@@ -20,21 +20,27 @@ def validate_time():
     check="@"
     dot='.'
     count=0
+    is_good=False
 
     passone_error=''
     passtwo_error=''
     user_error=''
-    check_error=''
+    email_error=''
 
-    if username==' ' or len(username)<3 or len(username):
+    for char in username:
+        if char==' ':
+            user_error='Not a valid username'
+            username=''
+    
+    if len(username)<3 or len(username)>20:
         user_error='Not a valid username'
         username=''
     
     if passone==' ' or len(passone)<3 or len(passone)>20:
         passone_error='Not a valid password'
-        passone=' '
+        passone=''
     
-    if passtwo=='' or len(passtwo)<3 or len(passtwo)>20:
+    if passtwo==' ' or len(passtwo)<3 or len(passtwo)>20:
         passtwo_error='Not a valid password'
         passtwo=''
 
@@ -45,17 +51,24 @@ def validate_time():
         passtwo=''
 
     for char in email:
-        if check:
-            continue
-        else:
-            check_error="That is not a valid email"
-        for chart in email:
-            if dot:
-                count=1
-        if count<1 and count>1:
-            check_error="To few or to many periods"
-        else:
-            continue
+        if char==check:
+            is_good=True
+    
+    if is_good==False:
+        email_error="Invalid password"  
+        email=''     
+    
+    for chart in email:
+        if chart=='.':
+            count+=1
+    
+    if count!=1:
+        email_error="To few or to many periods"
+        email=''
+
+    if email:
+        if not user_error and not passone_error and not passtwo_error and not email_error:
+            return redirect('/welcome?username={0}'.format(username))
 
     if not user_error and not passone_error and not passtwo_error:
         return redirect('/welcome?username={0}'.format(username))
@@ -63,7 +76,7 @@ def validate_time():
         return render_template('base.html', passone_error=passone_error, 
             passtwo_error=passtwo_error, user_error=user_error, 
             username=username, passone=passone, passtwo=passtwo,
-            check_error=check_error, email=email)
+            email_error=email_error, email=email)
 
 @app.route('/welcome')
 def welcome():
